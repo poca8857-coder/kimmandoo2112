@@ -754,7 +754,7 @@ const htmlContent = `<!DOCTYPE html>
             </div>
           </form>
           <div class="input-footer">
-            <span>Powered by Gemini 1.5 Flash</span>
+            <span>Powered by Gemini 2.5 Flash</span>
           </div>
         </div>
       </section>
@@ -763,7 +763,7 @@ const htmlContent = `<!DOCTYPE html>
 
   <script>
     const API_KEY = 'AQ.Ab8RN6LG2sBmfCYsRKYP3yEDSwYzbJf9HsXkGfV5EeHLvpophg';
-    const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + API_KEY;
+    const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + API_KEY;
 
     const SYSTEM_INSTRUCTION = "You are 'Bari' (바리), a passionate, friendly, and expert local travel guide in Barcelona. Your mission is to help tourists have the absolute best experience in Barcelona. Provide useful information including practical travel advice, ticket booking tips, local food recommendations and safety tips. Be warm and reply in Korean.";
 

@@ -1,7 +1,7 @@
 // Barcelona Tourism Chatbot Application Logic
 
 const API_KEY = 'AQ.Ab8RN6LG2sBmfCYsRKYP3yEDSwYzbJf9HsXkGfV5EeHLvpophg';
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
 // System Instructions to guide the Gemini Model
 const SYSTEM_INSTRUCTION = `
