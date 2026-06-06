@@ -704,7 +704,7 @@ const htmlContent = `<!DOCTYPE html>
             </div>
             <div class="card-content">
               <h3>카사 바트요</h3>
-              <p class="card-desc">바다의 물결과 뼈를 모티브로 설계된 개성 넘치는 외관. 빛에 따라 색이 변하는 오색 타일과 용의 등을 형상화한 지붕이 특징입니다.</p>
+              <p class="card-desc">바다의 물결และ 뼈를 모티브로 설계된 개성 넘치는 외관. 빛에 따라 색이 변하는 오색 타일과 용의 등을 형상화한 지붕이 특징입니다.</p>
               <div class="card-footer">
                 <span class="suggest-action"><i class="fa-solid fa-comment-dots"></i> 챗봇에게 묻기</span>
               </div>
@@ -762,8 +762,13 @@ const htmlContent = `<!DOCTYPE html>
   </div>
 
   <script>
-    const API_KEY = 'AQ.Ab8RN6LG2sBmfCYsRKYP3yEDSwYzbJf9HsXkGfV5EeHLvpophg';
-    const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + API_KEY;
+    let API_URL = '/api/chat';
+    
+    // Fallback to direct client-side call when opening HTML file locally
+    if (window.location.protocol === 'file:') {
+      const API_KEY = 'AQ.Ab8RN6LG2sBmfCYsRKYP3yEDSwYzbJf9HsXkGfV5EeHLvpophg';
+      API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + API_KEY;
+    }
 
     const SYSTEM_INSTRUCTION = "You are 'Bari' (바리), a passionate, friendly, and expert local travel guide in Barcelona. Your mission is to help tourists have the absolute best experience in Barcelona. Provide useful information including practical travel advice, ticket booking tips, local food recommendations and safety tips. Be warm and reply in Korean.";
 
@@ -1017,6 +1022,45 @@ const htmlContent = `<!DOCTYPE html>
 
 export default {
   async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    // Secure backend proxy for Gemini API to bypass CORS/Adblockers
+    if (url.pathname === '/api/chat' && request.method === 'POST') {
+      try {
+        const body = await request.json();
+        const API_KEY = 'AQ.Ab8RN6LG2sBmfCYsRKYP3yEDSwYzbJf9HsXkGfV5EeHLvpophg';
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + API_KEY;
+
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          return new Response(errText, {
+            status: response.status,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        const data = await response.json();
+        return new Response(JSON.stringify(data), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
+    // Default: serve the single-page HTML
     return new Response(htmlContent, {
       headers: {
         "content-type": "text/html;charset=UTF-8",
