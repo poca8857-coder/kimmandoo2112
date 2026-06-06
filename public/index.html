@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>바르셀로나 여행 가이드 챗봇 - Barcelona Travel Guide Chatbot</title>
+  <meta name="description" content="인공지능 Gemini와 함께 떠나는 아름다운 바르셀로나 여행! 사그라다 파밀리아, 구엘 공원, 카사 바트요 등 주요 명소와 숨겨진 타파스 맛집, 대중교통 팁을 챗봇에게 물어보세요.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <i class="fa-solid fa-compass logo-icon"></i>
+        <h1>Hola Barcelona!</h1>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="화면 테마 변경">
+          <i class="fa-solid fa-sun icon-sun"></i>
+          <i class="fa-solid fa-moon icon-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-content">
+      <!-- Left Panel: Attractions Showcase -->
+      <section class="attractions-panel" aria-label="바르셀로나 주요 명소">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-map-location-dot"></i> 대표 추천 관광지</h2>
+          <p>카드를 클릭하여 챗봇에게 바로 질문해 보세요!</p>
+        </div>
+        
+        <div class="attractions-list">
+          <!-- Card 1: Sagrada Familia -->
+          <article class="attraction-card" data-attraction="사그라다 파밀리아" tabindex="0">
+            <div class="card-image-wrapper">
+              <img src="assets/sagrada.png" alt="사그라다 파밀리아 성당 전경" loading="lazy">
+              <span class="card-tag">가우디 걸작</span>
+            </div>
+            <div class="card-content">
+              <h3>사그라다 파밀리아</h3>
+              <p class="card-desc">안토니 가우디의 미완의 걸작이자 바르셀로나의 대표 상징물. 숲을 닮은 거대한 기둥과 눈부신 스테인드글라스가 매력적입니다.</p>
+              <div class="card-footer">
+                <span class="suggest-action"><i class="fa-solid fa-comment-dots"></i> 챗봇에게 묻기</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Park Guell -->
+          <article class="attraction-card" data-attraction="구엘 공원" tabindex="0">
+            <div class="card-image-wrapper">
+              <img src="assets/parkguell.png" alt="구엘 공원 도마뱀 분수와 세라믹 벤치" loading="lazy">
+              <span class="card-tag">유네스코 문화유산</span>
+            </div>
+            <div class="card-content">
+              <h3>구엘 공원</h3>
+              <p class="card-desc">동화 속 세상에 온 듯한 모자이크 벤치와 타일 장식, 그리고 지중해가 한눈에 내려다보이는 가우디의 환상적인 자연 친화적 정원 도시.</p>
+              <div class="card-footer">
+                <span class="suggest-action"><i class="fa-solid fa-comment-dots"></i> 챗봇에게 묻기</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: Casa Batllo -->
+          <article class="attraction-card" data-attraction="카사 바트요" tabindex="0">
+            <div class="card-image-wrapper">
+              <img src="assets/casabatllo.png" alt="카사 바트요 해골 모양 발코니와 오색 찬란한 외벽" loading="lazy">
+              <span class="card-tag">가우디 건축물</span>
+            </div>
+            <div class="card-content">
+              <h3>카사 바트요</h3>
+              <p class="card-desc">바다의 물결과 뼈를 모티브로 설계된 개성 넘치는 외관. 빛에 따라 색이 변하는 오색 타일과 용의 등을 형상화한 지붕이 특징입니다.</p>
+              <div class="card-footer">
+                <span class="suggest-action"><i class="fa-solid fa-comment-dots"></i> 챗봇에게 묻기</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Right Panel: Chatbot Interface -->
+      <section class="chat-panel" aria-label="가이드 챗봇 대화방">
+        <div class="chat-header">
+          <div class="bot-info">
+            <div class="bot-avatar">
+              <i class="fa-solid fa-robot"></i>
+              <span class="status-indicator"></span>
+            </div>
+            <div class="bot-details">
+              <h2>바리(Bari) - AI 로컬 가이드</h2>
+              <span class="bot-status">실시간 답변 가능</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messages Container -->
+        <div class="chat-messages" id="chat-messages">
+          <!-- Initial Welcome Message -->
+          <div class="message bot-message">
+            <div class="message-content">
+              <p>Hola! 🇪🇸 바르셀로나 여행 가이드 <strong>바리(Bari)</strong>입니다! </p>
+              <p>사그라다 파밀리아, 구엘 공원 등 아름다운 명소 소개부터 현지인들이 가는 맛집 추천, 효율적인 3일 일정, 대중교통 이용 팁까지 바르셀로나에 관한 모든 것을 물어보세요!</p>
+              
+              <!-- Suggested Quick Buttons inside initial chat -->
+              <div class="chips-container">
+                <button class="suggest-chip" data-query="바르셀로나 3일 추천 여행 코스를 짜줘.">📍 3일 추천 일정</button>
+                <button class="suggest-chip" data-query="바르셀로나에서 꼭 먹어야 하는 필수 타파스 맛집들을 추천해줘.">🥘 필수 타파스 맛집</button>
+                <button class="suggest-chip" data-query="바르셀로나 대중교통(T-Usual, T-Casual 등) 이용 팁 알려줘.">🎫 대중교통 이용 팁</button>
+                <button class="suggest-chip" data-query="가우디 투어 예약 팁과 필수 방문 명소를 알려줘.">🏛️ 가우디 투어 팁</button>
+              </div>
+            </div>
+            <span class="message-time" id="welcome-time">20:46</span>
+          </div>
+        </div>
+
+        <!-- Chat Input Area -->
+        <div class="chat-input-area">
+          <form id="chat-form">
+            <div class="input-wrapper">
+              <textarea id="chat-input" placeholder="바르셀로나 여행에 대해 물어보세요... (Shift + Enter 줄바꿈)" rows="1" required></textarea>
+              <button type="submit" id="send-btn" class="send-btn" aria-label="메시지 전송">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+          <div class="input-footer">
+            <span>Powered by Gemini 1.5 Flash</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
